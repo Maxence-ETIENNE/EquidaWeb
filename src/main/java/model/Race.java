@@ -6,8 +6,10 @@ public class Race {
 
     private int id;
     private String nom;
+    
+    private Vente vente;
 
-    private ArrayList<Cheval> lesChevaux ;
+    private ArrayList<Vente> lesChevaux ;
 
     public Race() {
     }
@@ -23,18 +25,24 @@ public class Race {
     public void setNom(String nom) {
         this.nom = nom;
     }
+    public Vente getVente() {
+        return vente;
+    }
+    public void setVente(Vente vente) {
+        this.vente = vente;
+    }
 
-    public ArrayList<Cheval> getLesChevaux() {
+    public ArrayList<Vente> getLesChevaux() {
         return lesChevaux;
     }
 
-    public void setLesChevaux(ArrayList<Cheval> lesChevaux) {
+    public void setLesChevaux(ArrayList<Vente> lesChevaux) {
         this.lesChevaux = lesChevaux;
     }
 
-    public void addCheval(Cheval unCheval){
+    public void addCheval(Vente unCheval){
         if (lesChevaux ==null ){
-            lesChevaux = new ArrayList<Cheval>();
+            lesChevaux = new ArrayList<Vente>();
         }
         lesChevaux.add(unCheval);
     }

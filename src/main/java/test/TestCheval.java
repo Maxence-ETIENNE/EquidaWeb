@@ -1,6 +1,6 @@
 package test;
 
-import model.Cheval;
+import model.Vente;
 import model.Race;
 
 public class TestCheval {
@@ -8,7 +8,7 @@ public class TestCheval {
     public static void main (String args[]){
 
         // création d'une instance de cheval nommée c
-        Cheval c = new Cheval();
+        Vente c = new Vente();
         c.setId(2);
         c.setNom("Houri");
 
