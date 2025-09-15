@@ -9,10 +9,10 @@ public class TestCheval {
 
         // création d'une instance de cheval nommée c
         Cheval c = new Cheval();
-        c.setId(6);
-        c.setNom("Houri");
-        c.setSexe("M");
-        c.setSire("0807.000.010Z");
+        c.setId(3);
+        c.setNom("Herricka");
+        c.setSexe("F");
+        c.setSire("0808.000.020Z");
 
         // création d'une instance de race nommée r
         Race r = new Race();
@@ -27,19 +27,17 @@ public class TestCheval {
         System.out.println("Cheval : " + c.getId() + " " + c.getNom() + " " + c.getSexe() + " " + c.getSire() + " "
                 + c.getRace().getId() + " " + c.getRace().getNom());
         
-        Cheval e1 = new Cheval();
-        e1.setId(1);
-        e1.setNom("Valdack");
+        Cheval p1 = new Cheval();
+        p1.setId(6);
+        p1.setNom("Houri");
         
-        Cheval e2 = new Cheval();
-        e2.setId(3);
-        e2.setNom("Herricka");
+        Cheval m1 = new Cheval();
+        m1.setId(7);
+        m1.setNom("Hussa");
         
-        c.addEnfant(e1);
-        c.addEnfant(e2);
+        c.setPere(p1);
+        c.setMere(m1);
         
-        for (Cheval e : c.getLesEnfants()){
-            System.out.println("Enfant : " + e.getId() + " " + e.getNom());
-        }
+        System.out.println("Père : " + c.getPere() + " | Mère " + c.getMere());
     }
 }

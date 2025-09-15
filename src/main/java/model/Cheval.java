@@ -17,7 +17,6 @@ public class Cheval {
     private Race race;
     
     private ArrayList<Lot> lesLots ;
-    private ArrayList<Cheval> lesEnfants ;
 
     public Cheval() {
     }
@@ -84,18 +83,5 @@ public class Cheval {
             lesLots = new ArrayList<Lot>();
         }
         lesLots.add(unLot);
-    }
-    
-    public ArrayList<Cheval> getLesEnfants() {
-        return lesEnfants;
-    }
-    public void setLesEnfants(ArrayList<Cheval> lesEnfants) {
-        this.lesEnfants = lesEnfants;
-    }
-    public void addEnfant(Cheval unEnfant){
-        if (lesEnfants ==null ){
-            lesEnfants = new ArrayList<Cheval>();
-        }
-        lesEnfants.add(unEnfant);
     }
 }
