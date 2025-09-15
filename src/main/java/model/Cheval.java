@@ -10,8 +10,9 @@ public class Cheval {
     private LocalDate dateNaissance;
     private String sexe;
     private String sire;
-    private int idPere;
-    private int idMere;
+    
+    private Cheval pere;
+    private Cheval mere;
 
     private Race race;
     
@@ -52,17 +53,17 @@ public class Cheval {
         this.sire = sire;
     }
     
-    public int getIdPere() {
-        return idPere;
+    public Cheval getPere() {
+        return pere;
     }
-    public void setIdPere(int idPere) {
-        this.idPere = idPere;
+    public void setPere(Cheval pere) {
+        this.pere = pere;
     }
-    public int getIdMere() {
-        return idMere;
+    public Cheval getMere() {
+        return mere;
     }
-    public void setIdMere(int idMere) {
-        this.idMere = idMere;
+    public void setMere(Cheval mere) {
+        this.mere = mere;
     }
     
     public Race getRace() {
