@@ -1,6 +1,6 @@
 package test;
 
-import model.Vente;
+import model.Cheval;
 import model.Race;
 
 public class TestRace
@@ -10,17 +10,18 @@ public class TestRace
         Race r = new Race();
         r.setId(4);
         r.setNom("Andalou");
+        r.setDescription("La race préférée de Kenji Girac");
 
         // instanciation de 2 chevaux c1 et c2
         // ajout des chevaux c1 et c2 à l'arraylist des chevaux grâce
         // à la relation OneToMany
-        Vente c1 = new Vente();
-        c1.setId(1);
+        Cheval c1 = new Cheval();
+        c1.setId(13);
         c1.setNom("Eclipse");
         r.addCheval(c1);
 
-        Vente c2 = new Vente();
-        c2.setId(7);
+        Cheval c2 = new Cheval();
+        c2.setId(14);
         c2.setNom("Comète");
         r.addCheval(c2);
 
@@ -29,7 +30,7 @@ public class TestRace
         System.out.println("Liste des chevaux de la race : ");
 
 		// Affichage des informations sur chevaux liées à la race
-        for (Vente c : r.getLesChevaux()){
+        for (Cheval c : r.getLesChevaux()){
             System.out.println("Cheval numéro : " + c.getId() + " " + c.getNom());
         }
     }
