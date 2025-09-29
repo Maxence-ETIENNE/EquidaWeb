@@ -7,7 +7,7 @@ public class Vente {
 
     private int id;
     private String nom;
-    private LocalDate dateDebutVente;
+    private String dateDebutVente;
 
     private Lieu lieu;
     private Race race;
@@ -34,11 +34,11 @@ public class Vente {
         this.nom = nom;
     }
 
-    public LocalDate getDateDebutVente() {
+    public String getDateDebutVente() {
         return dateDebutVente;
     }
 
-    public void setDateDebutVente(LocalDate dateDebutVente) {
+    public void setDateDebutVente(String dateDebutVente) {
         this.dateDebutVente = dateDebutVente;
     }
     public Lieu getLieu() {

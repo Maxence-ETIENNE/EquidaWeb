@@ -53,7 +53,7 @@
                         <tr>
                             <th>id</th>
                             <th>nom</th>
-                            <th>race</th>
+                            <th>pays</th>
                         </tr>
                     </thead>
                     <tbody>

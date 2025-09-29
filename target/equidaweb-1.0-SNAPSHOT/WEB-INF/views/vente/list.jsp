@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.Cheval" %>
-<%@ page import="model.Race" %>
+<%@ page import="model.Vente" %>
+<%@ page import="model.Lieu" %>
 <%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
@@ -31,7 +31,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href='../ServletCheval/list' class="navbar-brand">
+                    <a href='../ServletVente/list' class="navbar-brand">
                         Système de gestion des ventes aux enchères de chevaux
                     </a>
                 </div>
@@ -40,28 +40,28 @@
 
         <div class="container special">
             <div class="header-actions">
-                <h2 class="h2">Liste des chevaux</h2>
-                <a href="<%= request.getContextPath() %>/cheval-servlet/add" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-plus"></span> Ajouter un cheval
+                <h2 class="h2">Liste des ventes</h2>
+                <a href="<%= request.getContextPath() %>/vente-servlet/add" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus"></span> Ajouter une vente
                 </a>
             </div>
             
             <div class="table-responsive">
-                <% ArrayList<Cheval> lesChevaux = (ArrayList)request.getAttribute("pLesChevaux"); %>
+                <% ArrayList<Vente> lesVentes = (ArrayList)request.getAttribute("pLesVentes"); %>
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
                             <th>id</th>
                             <th>nom</th>
-                            <th>race</th>
+                            <th>ville</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% for (Cheval c : lesChevaux) { %>
+                        <% for (Vente v : lesVentes) { %>
                             <tr>
-                                <td><%= c.getId() %></td>
-                                <td><a href="<%= request.getContextPath() %>/cheval-servlet/show?idCheval=<%= c.getId() %>"><%= c.getNom() %></a></td>
-                                <td><%= c.getRace().getNom() %></td>
+                                <td><%= v.getId() %></td>
+                                <td><a href="<%= request.getContextPath() %>/vente-servlet/show?idVente=<%= v.getId() %>"><%= v.getNom() %></a></td>
+                                <td><%= v.getLieu().getVille() %></td>
                             </tr>
                         <% } %>
                     </tbody>

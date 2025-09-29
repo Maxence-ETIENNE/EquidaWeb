@@ -23,7 +23,7 @@ public class DaoCheval {
         ArrayList<Cheval> lesChevaux = new ArrayList<Cheval>();
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT c.id as c_id, c.nom as c_nom, " +
+                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, c.pere_id as c_pere, c.mere_id as c_mere, " +
                 "r.id as r_id, r.nom as r_nom " +
                 "FROM cheval c " +
                 "INNER JOIN race r ON c.race_id = r.id"
@@ -33,10 +33,19 @@ public class DaoCheval {
                 Cheval c = new Cheval();
                 c.setId(resultatRequete.getInt("c_id"));
                 c.setNom(resultatRequete.getString("c_nom"));
+                c.setDateNaissance(resultatRequete.getString("c_dateNaissance"));
+                c.setSexe(resultatRequete.getString("c_sexe"));
+                c.setSire(resultatRequete.getString("c_sire"));
                 Race r = new Race();
                 r.setId(resultatRequete.getInt("r_id"));
                 r.setNom(resultatRequete.getString("r_nom"));
                 c.setRace(r);
+                /*if (resultatRequete.getInt("c_pere") != 0) {
+                    c.setPere(getLeCheval(cnx, resultatRequete.getInt("c_pere")));
+                }
+                if (resultatRequete.getInt("c_mere") != 0) {
+                    c.setPere(getLeCheval(cnx, resultatRequete.getInt("c_mere")));
+                }*/
                 lesChevaux.add(c);
             }
         } catch (SQLException e) {
@@ -56,7 +65,7 @@ public class DaoCheval {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT c.id as c_id, c.nom as c_nom, " +
+                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, c.pere_id as c_pere, c.mere_id as c_mere, " +
                 "r.id as r_id, r.nom as r_nom " +
                 "FROM cheval c " +
                 "INNER JOIN race r ON c.race_id = r.id " +
@@ -68,10 +77,19 @@ public class DaoCheval {
                 cheval = new Cheval();
                 cheval.setId(resultatRequete.getInt("c_id"));
                 cheval.setNom(resultatRequete.getString("c_nom"));
+                cheval.setDateNaissance(resultatRequete.getString("c_dateNaissance"));
+                cheval.setSexe(resultatRequete.getString("c_sexe"));
+                cheval.setSire(resultatRequete.getString("c_sire"));
                 Race race = new Race();
                 race.setId(resultatRequete.getInt("r_id"));
                 race.setNom(resultatRequete.getString("r_nom"));
                 cheval.setRace(race);
+                /*if (resultatRequete.getInt("c_pere") != 0) {
+                    cheval.setPere(getLeCheval(cnx, resultatRequete.getInt("c_pere")));
+                }
+                if (resultatRequete.getInt("c_mere") != 0) {
+                    cheval.setPere(getLeCheval(cnx, resultatRequete.getInt("c_mere")));
+                }*/
             }
         } catch (SQLException e) {
             e.printStackTrace();

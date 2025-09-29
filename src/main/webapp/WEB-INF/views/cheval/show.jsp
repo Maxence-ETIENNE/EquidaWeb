@@ -73,6 +73,16 @@
                                     <%= leCheval.getDateNaissance() != null ? leCheval.getDateNaissance() : "Non renseignée" %>
                                 </div>
                             </div>
+                                
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Sexe</div>
+                                <div class="col-sm-9 detail-value"><%= leCheval.getSexe() %></div>
+                            </div>
+                            
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Sire</div>
+                                <div class="col-sm-9 detail-value"><%= leCheval.getSire() %></div>
+                            </div>
 
                             <div class="row detail-row">
                                 <div class="col-sm-3 detail-label">Race</div>
