@@ -1,11 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.Cheval" %>
+<%@ page import="model.Vente" %>
+<%@ page import="model.Lot" %>
+<%@ page import="database.DaoVente" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="jakarta.servlet.ServletContext" %>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Equida - Détails du cheval</title>
+        <title>Equida - Détails de la vente</title>
         <link rel="stylesheet" 
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -34,66 +38,86 @@
             .detail-value {
                 padding-top: 7px;
             }
+            th { 
+                padding-left: 20px; 
+		padding-right: 20px; 
+            }
+            td { 
+                text-align: center; 
+            }
+            table, th, td {
+		border: 1px solid black;
+		border-collapse: collapse;
+            }
         </style>
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="<%= request.getContextPath() %>/cheval-servlet/list">
-                        Gestion des chevaux
+                    <a class="navbar-brand" href="<%= request.getContextPath() %>/vente-servlet/list">
+                        Gestion des ventes
                     </a>
                 </div>
             </div>
         </nav>
 
         <div class="container special">
+            <% Connection cnx; %>
+            <% ServletContext servletContext = getServletContext(); %>
+            <% cnx = (Connection)servletContext.getAttribute("connection"); %>
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="form-container">
                         <% 
-                            Cheval leCheval = (Cheval)request.getAttribute("pLeCheval");
-                            if(leCheval != null) {
+                            Vente laVente = (Vente)request.getAttribute("pLaVente");
+                            if(laVente != null) {
                         %>
-                            <h2>Détails du cheval : <%= leCheval.getNom() %></h2>
+                            <h2>Détails de la vente : <%= laVente.getNom() %></h2>
                             
                             <div class="row detail-row">
                                 <div class="col-sm-3 detail-label">Identifiant</div>
-                                <div class="col-sm-9 detail-value"><%= leCheval.getId() %></div>
+                                <div class="col-sm-9 detail-value"><%= laVente.getId() %></div>
                             </div>
 
                             <div class="row detail-row">
                                 <div class="col-sm-3 detail-label">Nom</div>
-                                <div class="col-sm-9 detail-value"><%= leCheval.getNom() %></div>
+                                <div class="col-sm-9 detail-value"><%= laVente.getNom() %></div>
                             </div>
 
                             <div class="row detail-row">
-                                <div class="col-sm-3 detail-label">Date de naissance</div>
+                                <div class="col-sm-3 detail-label">Date de début</div>
                                 <div class="col-sm-9 detail-value">
-                                    <%= leCheval.getDateNaissance() != null ? leCheval.getDateNaissance() : "Non renseignée" %>
+                                    <%= laVente.getDateDebutVente() != null ? laVente.getDateDebutVente() : "Non renseignée" %>
+                                </div>
+                            </div>
+
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Lieu</div>
+                                <div class="col-sm-9 detail-value">
+                                    <%= laVente.getLieu() != null ? laVente.getLieu().getVille() : "Non renseignée" %>
                                 </div>
                             </div>
                                 
-                            <div class="row detail-row">
-                                <div class="col-sm-3 detail-label">Sexe</div>
-                                <div class="col-sm-9 detail-value"><%= leCheval.getSexe() %></div>
-                            </div>
-                            
-                            <div class="row detail-row">
-                                <div class="col-sm-3 detail-label">Sire</div>
-                                <div class="col-sm-9 detail-value"><%= leCheval.getSire() %></div>
-                            </div>
-
-                            <div class="row detail-row">
-                                <div class="col-sm-3 detail-label">Race</div>
-                                <div class="col-sm-9 detail-value">
-                                    <%= leCheval.getRace() != null ? leCheval.getRace().getNom() : "Non renseignée" %>
-                                </div>
-                            </div>
+                            <h3>Lots associés à cette vente:</h3>
+                            <table>
+                                <tr>
+                                    <th>Numéro du lot</th>
+                                    <th>Nom du cheval</th>
+                                    <th>Prix de départ</th>
+                                </tr>
+                                <% for (Lot leLot : DaoVente.getLotsByVenteId(cnx, laVente.getId())) { %>
+                                    <tr>
+                                        <td><%= leLot.getId() %></td>
+                                        <td><a href="<%= request.getContextPath() %>/cheval-servlet/show?idCheval=<%= leLot.getCheval().getId() %>"><%= leLot.getCheval().getNom() %></a></td>
+                                        <td><%= leLot.getPrixDepart() %>€</td>
+                                    </tr>
+                                <% } %>
+                            </table>
 
                             <div class="row" style="margin-top: 30px;">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <a href="<%= request.getContextPath() %>/cheval-servlet/list" class="btn btn-default">
+                                    <a href="<%= request.getContextPath() %>/vente-servlet/list" class="btn btn-default">
                                         <span class="glyphicon glyphicon-arrow-left"></span> Retour à la liste
                                     </a>
                                     <!-- Vous pouvez ajouter d'autres boutons ici, comme Modifier ou Supprimer -->
@@ -101,9 +125,9 @@
                             </div>
                         <% } else { %>
                             <div class="alert alert-danger">
-                                Le cheval demandé n'existe pas.
+                                La vente demandée n'existe pas.
                             </div>
-                            <a href="<%= request.getContextPath() %>/cheval-servlet/list" class="btn btn-default">
+                            <a href="<%= request.getContextPath() %>/vente-servlet/list" class="btn btn-default">
                                 <span class="glyphicon glyphicon-arrow-left"></span> Retour à la liste
                             </a>
                         <% } %>

@@ -7,7 +7,7 @@ public class Cheval {
 
     private int id;
     private String nom;
-    private LocalDate dateNaissance;
+    private String dateNaissance;
     private String sexe;
     private String sire;
     
@@ -33,10 +33,10 @@ public class Cheval {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public LocalDate getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
-    public void setDateNaissance(LocalDate dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
     public String getSexe() {

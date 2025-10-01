@@ -86,7 +86,7 @@ public class ChevalServlet extends HttpServlet {
 
                 // Gestion de la date de naissance
                 if (dateNaissanceStr != null && !dateNaissanceStr.isEmpty()) {
-                    LocalDate dateNaissance = LocalDate.parse(dateNaissanceStr);
+                    String dateNaissance = dateNaissanceStr;
                     nouveauCheval.setDateNaissance(dateNaissance);
                 }
 
