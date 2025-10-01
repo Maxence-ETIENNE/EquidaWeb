@@ -90,6 +90,28 @@
                                     <%= leCheval.getRace() != null ? leCheval.getRace().getNom() : "Non renseignée" %>
                                 </div>
                             </div>
+                                
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Père</div>
+                                <div class="col-sm-9 detail-value">
+                                    <% if (leCheval.getPere().getId() != 0) {
+                                        %><a href="<%= request.getContextPath() %>/cheval-servlet/show?idCheval=<%= leCheval.getPere().getId() %>"><%=leCheval.getPere().getNom()%></a>
+                                    <%} else {
+                                        %>Non renseigné
+                                    <% } %>
+                                </div>
+                            </div>
+                                
+                            <div class="row detail-row">
+                                <div class="col-sm-3 detail-label">Mère</div>
+                                <div class="col-sm-9 detail-value">
+                                    <% if (leCheval.getMere().getId() != 0) {
+                                        %><a href="<%= request.getContextPath() %>/cheval-servlet/show?idCheval=<%= leCheval.getMere().getId() %>"><%=leCheval.getMere().getNom()%></a>
+                                    <%} else {
+                                        %>Non renseigné
+                                    <% } %>
+                                </div>
+                            </div>
 
                             <div class="row" style="margin-top: 30px;">
                                 <div class="col-sm-offset-3 col-sm-9">

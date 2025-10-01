@@ -21,16 +21,20 @@ public class DaoCheval {
      */
     public static ArrayList<Cheval> getLesChevaux(Connection cnx) {
         ArrayList<Cheval> lesChevaux = new ArrayList<Cheval>();
+        Cheval c = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, c.pere_id as c_pere, c.mere_id as c_mere, " +
+                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, pere.id as c_pere_id, pere.nom as c_pere_nom, mere.id as c_mere_id, mere.nom as c_mere_nom, " +
                 "r.id as r_id, r.nom as r_nom " +
                 "FROM cheval c " +
-                "INNER JOIN race r ON c.race_id = r.id"
+                "INNER JOIN race r ON c.race_id = r.id " +
+                "LEFT OUTER JOIN cheval pere ON c.pere_id = pere.id " +
+                "LEFT OUTER JOIN cheval mere ON c.mere_id = mere.id " +
+                "ORDER BY c_id ASC"
             );
             resultatRequete = requeteSql.executeQuery();
             while (resultatRequete.next()) {
-                Cheval c = new Cheval();
+                c = new Cheval();
                 c.setId(resultatRequete.getInt("c_id"));
                 c.setNom(resultatRequete.getString("c_nom"));
                 c.setDateNaissance(resultatRequete.getString("c_dateNaissance"));
@@ -40,14 +44,18 @@ public class DaoCheval {
                 r.setId(resultatRequete.getInt("r_id"));
                 r.setNom(resultatRequete.getString("r_nom"));
                 c.setRace(r);
-                /*if (resultatRequete.getInt("c_pere") != 0) {
-                    c.setPere(getLeCheval(cnx, resultatRequete.getInt("c_pere")));
-                }
-                if (resultatRequete.getInt("c_mere") != 0) {
-                    c.setPere(getLeCheval(cnx, resultatRequete.getInt("c_mere")));
-                }*/
+                Cheval pere = new Cheval();
+                pere.setId(resultatRequete.getInt("c_pere_id"));
+                pere.setNom(resultatRequete.getString("c_pere_nom"));
+                c.setPere(pere);
+                Cheval mere = new Cheval();
+                mere.setId(resultatRequete.getInt("c_mere_id"));
+                mere.setNom(resultatRequete.getString("c_mere_nom"));
+                c.setMere(mere);
+                //System.out.println(c.getPere().getNom() + " "+ c.getMere().getNom());
                 lesChevaux.add(c);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("La requête de getLesChevaux a généré une exception SQL");
@@ -65,12 +73,16 @@ public class DaoCheval {
         Cheval cheval = null;
         try {
             requeteSql = cnx.prepareStatement(
-                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, c.pere_id as c_pere, c.mere_id as c_mere, " +
+                "SELECT c.id as c_id, c.nom as c_nom, c.date_naissance as c_dateNaissance, c.sexe as c_sexe, c.sire as c_sire, pere.id as c_pere_id, pere.nom as c_pere_nom, mere.id as c_mere_id, mere.nom as c_mere_nom, " +
                 "r.id as r_id, r.nom as r_nom " +
                 "FROM cheval c " +
                 "INNER JOIN race r ON c.race_id = r.id " +
-                "WHERE c.id = ?"
+                "LEFT OUTER JOIN cheval pere ON c.pere_id = pere.id " +
+                "LEFT OUTER JOIN cheval mere ON c.mere_id = mere.id " +
+                "WHERE c.id = ? " +
+                "ORDER BY c_id ASC"
             );
+            // , c.pere_id as c_pere, c.mere_id as c_mere,
             requeteSql.setInt(1, idCheval);
             resultatRequete = requeteSql.executeQuery();
             if (resultatRequete.next()) {
@@ -84,12 +96,14 @@ public class DaoCheval {
                 race.setId(resultatRequete.getInt("r_id"));
                 race.setNom(resultatRequete.getString("r_nom"));
                 cheval.setRace(race);
-                /*if (resultatRequete.getInt("c_pere") != 0) {
-                    cheval.setPere(getLeCheval(cnx, resultatRequete.getInt("c_pere")));
-                }
-                if (resultatRequete.getInt("c_mere") != 0) {
-                    cheval.setPere(getLeCheval(cnx, resultatRequete.getInt("c_mere")));
-                }*/
+                Cheval pere = new Cheval();
+                pere.setId(resultatRequete.getInt("c_pere_id"));
+                pere.setNom(resultatRequete.getString("c_pere_nom"));
+                cheval.setPere(pere);
+                Cheval mere = new Cheval();
+                mere.setId(resultatRequete.getInt("c_mere_id"));
+                mere.setNom(resultatRequete.getString("c_mere_nom"));
+                cheval.setMere(mere);
             }
         } catch (SQLException e) {
             e.printStackTrace();
